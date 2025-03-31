@@ -9,17 +9,17 @@ const NotePage = () => {
     let [note, setNote] = useState(null);
 
     useEffect(() => {
-        if (note && id !== 'new' && note.body === '') {
+        if (note && id !== 'new' && note?.body === '') {
             deleteNote();
         }
         getNote();
-    }, [note?.body]);
+    }, [id]);
     
 
     let getNote = async () => {
         if (id === 'new') return;
 
-        let response = await fetch(`http://127.0.0.1:8000/api/notes/${id}`);
+        let response = await fetch(`http://127.0.0.1:8000/api/notes/${id}/`);
         let data = await response.json();
         setNote(data);
     }
@@ -65,8 +65,8 @@ const NotePage = () => {
     let handleSubmit = () => {
         console.log("Handle Submit Triggered", note)
 
-        if (id !== 'new' && note.body === '') {
-            console.log("Delete Handle Triggered", note.body)
+        if (id !== 'new' && note?.body === '') {
+            console.log("Delete Handle Triggered", note?.body)
             deleteNote();
         }
         else if  (id !== 'new') {
@@ -106,7 +106,7 @@ const NotePage = () => {
                         <button onClick={handleSubmit}>Done</button>
                     )}
                 </div>
-                <textarea  onChange={(e) => setNote({ ...note, body: e.target.value })} value={note ? note.body : ''}
+                <textarea style={{border:'1px solid white'}} onChange={(e) => setNote({ ...note, body: e.target.value })} value={note ? note.body : ''}
             ></textarea>
             </div>
         </>
